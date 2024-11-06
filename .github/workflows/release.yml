@@ -1,0 +1,45 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '23'
+          distribution: 'oracle'
+          cache: maven
+
+      - name: Setup JavaFX
+        run: |
+          wget https://download2.gluonhq.com/openjfx/23/openjfx-23_linux-x64_bin-sdk.zip
+          unzip openjfx-23_linux-x64_bin-sdk.zip
+
+      - name: Build with Maven
+        run: |
+          mvn clean package
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME }}
+          PATH_TO_FX: ${{ github.workspace }}/javafx-sdk-23/lib
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/*.jar
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
