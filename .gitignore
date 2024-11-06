@@ -1,0 +1,5 @@
+.repomixignore
+repomix.config.json
+repomix-output.txt
+.idea
+out

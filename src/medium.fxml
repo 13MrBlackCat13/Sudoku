@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController" styleClass="main-container" style="-fx-background-color: #588157;">
+    <left>
+        <VBox spacing="20" styleClass="control-panel">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Button fx:id="backButton" text="%game.back" onAction="#handleBack" styleClass="control-button"/>
+            <Label fx:id="timerLabel" text="00:00" styleClass="timer-label"/>
+            <HBox spacing="10" styleClass="button-group">
+                <Button fx:id="saveButton" text="%game.save" onAction="#handleSave" styleClass="game-button"/>
+                <Button fx:id="loadButton" text="%game.load" onAction="#handleLoad" styleClass="game-button"/>
+            </HBox>
+            <HBox spacing="10" styleClass="button-group">
+                <Button fx:id="restartButton" text="%game.restart" onAction="#handleRestart" styleClass="game-button"/>
+                <Button fx:id="hintButton" text="%game.hint" onAction="#handleHint" styleClass="game-button"/>
+            </HBox>
+        </VBox>
+    </left>
+    <center>
+        <StackPane alignment="CENTER" style="-fx-padding: 20;">
+            <GridPane fx:id="gamePane" styleClass="game-grid" hgap="1" vgap="1" alignment="CENTER">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES" minHeight="50.0" prefHeight="50.0"/>
+                </rowConstraints>
+                <TextField fx:id="cell_0_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_0_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_0_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_0_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_0_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_0_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_0_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_0_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_0_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="0" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_1_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_1_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_1_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_1_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_1_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_1_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_1_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_1_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_1_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="1" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_2_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_2_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_2_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_2_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_2_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_2_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_2_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_2_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_2_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="2" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_3_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_3_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_3_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_3_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_3_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_3_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_3_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_3_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_3_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="3" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_4_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_4_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_4_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_4_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_4_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_4_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_4_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_4_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_4_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="4" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_5_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_5_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_5_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_5_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_5_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_5_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_5_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_5_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_5_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="5" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_6_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_6_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_6_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_6_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_6_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_6_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_6_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_6_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_6_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="6" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_7_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_7_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_7_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_7_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_7_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_7_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_7_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_7_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_7_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="7" GridPane.columnIndex="8"/>
+                <TextField fx:id="cell_8_0" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <TextField fx:id="cell_8_1" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                <TextField fx:id="cell_8_2" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+                <TextField fx:id="cell_8_3" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
+                <TextField fx:id="cell_8_4" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="4"/>
+                <TextField fx:id="cell_8_5" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="5"/>
+                <TextField fx:id="cell_8_6" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="6"/>
+                <TextField fx:id="cell_8_7" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="7"/>
+                <TextField fx:id="cell_8_8" styleClass="game-cell" alignment="CENTER" maxWidth="50" maxHeight="50" GridPane.rowIndex="8" GridPane.columnIndex="8"/>
+            </GridPane>
+        </StackPane>
+    </center>
+    <stylesheets>
+        <String fx:value="styles.css"/>
+    </stylesheets>
+</BorderPane>
