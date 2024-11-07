@@ -58,20 +58,22 @@
                                     <mainClass>${main.class}</mainClass>
                                 </transformer>
                             </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                        <exclude>module-info.class</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                             <finalName>${app.name}</finalName>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- JavaFX Maven Plugin -->
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
-                <configuration>
-                    <mainClass>${main.class}</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -87,7 +89,6 @@
                         <version>1.6.0</version>
                         <configuration>
                             <name>${app.name}</name>
-                            <appVersion>${project.version}</appVersion>
                             <vendor>Your Company</vendor>
                             <destination>target/dist</destination>
                             <module>${main.class}</module>
