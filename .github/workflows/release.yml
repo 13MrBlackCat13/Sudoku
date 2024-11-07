@@ -47,7 +47,7 @@ jobs:
 
       - name: Update version in pom.xml
         run: |
-          mvn versions:set -DnewVersion=${{ needs.prepare.outputs.version }}
+          mvn versions:set -DnewVersion=${{ needs.prepare.outputs.version }} -DgenerateBackupPoms=false
           mvn versions:commit
 
       - name: Build with Maven
@@ -58,33 +58,33 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
-          Write-Host "Current directory: $(Get-Location)"
-          Write-Host "Contents of current directory:"
-          Get-ChildItem -Recurse
-          
+          Write-Host "Contents of target directory:"
+          Get-ChildItem target
+
           New-Item -ItemType Directory -Force -Path "dist"
+          
+          $version = "${{ needs.prepare.outputs.version }}"
           
           jpackage --input target/ `
                   --main-jar Sudoku.jar `
                   --main-class App `
                   --type exe `
-                  --name Sudoku `
+                  --name "Sudoku" `
                   --dest dist `
-                  --app-version ${{ needs.prepare.outputs.version }} `
+                  --app-version $version `
                   --win-dir-chooser `
                   --win-menu `
                   --win-shortcut
+
+          Write-Host "Contents of dist directory:"
+          Get-ChildItem dist
           
-          Write-Host "Contents after build:"
-          Get-ChildItem -Recurse
-          
-          if (Test-Path "dist\Sudoku.exe") {
-              Write-Host "Found Sudoku.exe, creating archive..."
-              Compress-Archive -Path "dist\Sudoku.exe" -DestinationPath ${{ matrix.artifact_name }}
+          $exePath = Get-ChildItem dist/Sudoku*.exe | Select-Object -First 1
+          if ($exePath) {
+              Write-Host "Found executable: $($exePath.Name)"
+              Compress-Archive -Path $exePath.FullName -DestinationPath ${{ matrix.artifact_name }}
           } else {
-              Write-Host "Contents of dist directory:"
-              Get-ChildItem dist
-              Write-Error "Sudoku.exe not found in dist directory!"
+              Write-Error "No Sudoku executable found in dist directory!"
               exit 1
           }
 

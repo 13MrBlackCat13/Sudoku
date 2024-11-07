@@ -71,6 +71,7 @@
                                 </filter>
                             </filters>
                             <finalName>${app.name}</finalName>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
