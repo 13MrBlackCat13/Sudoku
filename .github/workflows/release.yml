@@ -58,20 +58,33 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
+          Write-Host "Current directory: $(Get-Location)"
+          Write-Host "Contents of current directory:"
+          Get-ChildItem -Recurse
+          
+          New-Item -ItemType Directory -Force -Path "dist"
+          
           jpackage --input target/ `
                   --main-jar Sudoku.jar `
                   --main-class App `
                   --type exe `
                   --name Sudoku `
+                  --dest dist `
                   --app-version ${{ needs.prepare.outputs.version }} `
                   --win-dir-chooser `
                   --win-menu `
                   --win-shortcut
           
-          if (Test-Path "Sudoku.exe") {
-              Compress-Archive -Path "Sudoku.exe" -DestinationPath ${{ matrix.artifact_name }}
+          Write-Host "Contents after build:"
+          Get-ChildItem -Recurse
+          
+          if (Test-Path "dist\Sudoku.exe") {
+              Write-Host "Found Sudoku.exe, creating archive..."
+              Compress-Archive -Path "dist\Sudoku.exe" -DestinationPath ${{ matrix.artifact_name }}
           } else {
-              Write-Error "Sudoku.exe not found!"
+              Write-Host "Contents of dist directory:"
+              Get-ChildItem dist
+              Write-Error "Sudoku.exe not found in dist directory!"
               exit 1
           }
 
