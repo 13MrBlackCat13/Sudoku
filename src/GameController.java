@@ -102,7 +102,6 @@ public class GameController {
                 final int row = i;
                 final int col = j;
 
-                // Добавляем обработчик клавиш
                 cell.setOnKeyPressed(event -> {
                     System.out.println("Key pressed: " + event.getCode());
                     if (!cell.isEditable()) {
@@ -134,7 +133,6 @@ public class GameController {
                     }
                 });
 
-                // Обработчик для предотвращения нежелательного ввода
                 cell.textProperty().addListener((observable, oldValue, newValue) -> {
                     if (!cell.isFocused()) return;
 
@@ -143,13 +141,11 @@ public class GameController {
                         return;
                     }
 
-                    // Если введено что-то кроме одной цифры от 1 до 9
                     if (!newValue.matches("[1-9]")) {
                         Platform.runLater(() -> cell.setText(oldValue));
                     }
                 });
 
-                // Обработчик фокуса для подсветки
                 cell.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
                     if (isFocused) {
                         System.out.println("Cell focused: " + row + "," + col);
@@ -162,7 +158,6 @@ public class GameController {
         }
     }
 
-    // Добавляем метод для проверки состояния ячейки
     private void debugCellState(TextField cell, int row, int col) {
         System.out.println("Cell [" + row + "," + col + "]:");
         System.out.println("- Editable: " + cell.isEditable());
@@ -174,7 +169,6 @@ public class GameController {
 
 
     private void setupCellBehavior(TextField cell, int row, int col) {
-        // Ограничиваем ввод одной цифрой
         cell.textProperty().addListener((observable, oldValue, newValue) -> {
             if (isProcessingInput) return;
 
@@ -185,13 +179,11 @@ public class GameController {
                     return;
                 }
 
-                // Оставляем только первый символ если введено больше
                 if (newValue.length() > 1) {
                     cell.setText(newValue.substring(0, 1));
                     return;
                 }
 
-                // Проверяем, что введена цифра от 1 до 9
                 if (!newValue.matches("[1-9]")) {
                     cell.setText(oldValue);
                     return;
@@ -215,7 +207,6 @@ public class GameController {
             }
         });
 
-        // Добавляем подсветку связанных ячеек
         cell.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
             if (isFocused) {
                 highlightRelatedCells(row, col);
@@ -272,7 +263,6 @@ public class GameController {
             try {
                 int[][] currentBoard = game.getBoard();
 
-                // Сначала делаем все ячейки редактируемыми и очищаем их
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
                         if (cells[i][j] != null) {
@@ -284,7 +274,6 @@ public class GameController {
                     }
                 }
 
-                // Затем устанавливаем начальные значения
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
                         TextField cell = cells[i][j];
@@ -315,7 +304,6 @@ public class GameController {
         });
     }
 
-    // Добавляем вспомогательный метод для отладки
     private void printBoard(int[][] board) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
