@@ -6,7 +6,20 @@ on:
       - 'v*'
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Get version from tag
+        id: get_version
+        run: |
+          # Convert v1.0.3 to 1.0.3
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
   build:
+    needs: prepare
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
@@ -32,31 +45,30 @@ jobs:
           distribution: 'oracle'
           cache: maven
 
-      - name: Build JAR
-        run: mvn clean package
+      - name: Update version in pom.xml
+        run: |
+          mvn versions:set -DnewVersion=${{ needs.prepare.outputs.version }}
+          mvn versions:commit
 
-      - name: Format Version
-        id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+      - name: Build with Maven
+        run: mvn clean package -Pnative-image
 
       # Windows-specific steps
-      - name: Build Windows Executable
+      - name: Build Windows Package
         if: matrix.os == 'windows-latest'
+        shell: pwsh
         run: |
-          # Create Windows executable using jpackage
           jpackage --input target/ `
                   --main-jar Sudoku.jar `
                   --main-class App `
                   --type exe `
                   --name Sudoku `
-                  --app-version ${{ env.VERSION }} `
+                  --app-version ${{ needs.prepare.outputs.version }} `
                   --win-dir-chooser `
                   --win-menu `
                   --win-shortcut `
                   --icon src/main/resources/icon.ico
-          
-          # Create ZIP with executable and dependencies
-          7z a ${{ matrix.artifact_name }} Sudoku
+          Compress-Archive -Path .\Sudoku.exe -DestinationPath ${{ matrix.artifact_name }}
 
       # Linux-specific steps
       - name: Build Linux Package
@@ -67,7 +79,7 @@ jobs:
                   --main-class App \
                   --type deb \
                   --name Sudoku \
-                  --app-version ${{ env.VERSION }}
+                  --app-version ${{ needs.prepare.outputs.version }}
           zip -r ${{ matrix.artifact_name }} *.deb
 
       # macOS-specific steps
@@ -79,7 +91,8 @@ jobs:
                   --main-class App \
                   --type dmg \
                   --name Sudoku \
-                  --app-version ${{ env.VERSION }}
+                  --app-version ${{ needs.prepare.outputs.version }} \
+                  --mac-package-name Sudoku
           zip -r ${{ matrix.artifact_name }} *.dmg
 
       - name: Upload Release Assets
@@ -88,7 +101,7 @@ jobs:
           files: |
             ${{ matrix.artifact_name }}
             target/Sudoku.jar
-          name: Release ${{ github.ref_name }}
+          name: Release ${{ needs.prepare.outputs.version }}
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
