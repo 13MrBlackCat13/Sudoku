@@ -70,7 +70,7 @@ A modern Java-based Sudoku puzzle game built with JavaFX, featuring multiple dif
 
 ## License
 
-Licensed under the MIT License. See [LICENSE](https://github.com/13MrBlackCat13/Sudoku/LICENSE) for details.
+Licensed under the MIT License. See [LICENSE](https://github.com/13MrBlackCat13/Sudoku/blob/master/LICENSE) for details.
 
 ---
 
