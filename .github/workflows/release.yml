@@ -32,27 +32,24 @@ jobs:
           distribution: 'oracle'
           cache: maven
 
-      - name: Setup JavaFX
-        uses: actions/setup-java@v3
-        with:
-          java-version: '23'
-          distribution: 'oracle'
-          java-package: 'jdk'
+      - name: Build JAR
+        run: mvn clean package
+
+      - name: Format Version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
       # Windows-specific steps
       - name: Build Windows Executable
         if: matrix.os == 'windows-latest'
         run: |
-          # Create JAR
-          mvn clean package
-          
           # Create Windows executable using jpackage
           jpackage --input target/ `
                   --main-jar Sudoku.jar `
                   --main-class App `
                   --type exe `
                   --name Sudoku `
-                  --app-version ${{ github.ref_name }} `
+                  --app-version ${{ env.VERSION }} `
                   --win-dir-chooser `
                   --win-menu `
                   --win-shortcut `
@@ -65,26 +62,24 @@ jobs:
       - name: Build Linux Package
         if: matrix.os == 'ubuntu-latest'
         run: |
-          mvn clean package
           jpackage --input target/ \
                   --main-jar Sudoku.jar \
                   --main-class App \
                   --type deb \
                   --name Sudoku \
-                  --app-version ${{ github.ref_name }}
+                  --app-version ${{ env.VERSION }}
           zip -r ${{ matrix.artifact_name }} *.deb
 
       # macOS-specific steps
       - name: Build macOS Package
         if: matrix.os == 'macos-latest'
         run: |
-          mvn clean package
           jpackage --input target/ \
                   --main-jar Sudoku.jar \
                   --main-class App \
                   --type dmg \
                   --name Sudoku \
-                  --app-version ${{ github.ref_name }}
+                  --app-version ${{ env.VERSION }}
           zip -r ${{ matrix.artifact_name }} *.dmg
 
       - name: Upload Release Assets
