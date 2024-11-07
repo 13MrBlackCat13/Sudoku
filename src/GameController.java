@@ -7,7 +7,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,12 +15,9 @@ import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
+
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GameController {
     @FXML
@@ -106,23 +102,75 @@ public class GameController {
                 final int row = i;
                 final int col = j;
 
-                // Модифицируем слушатель
-                cell.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (isProcessingInput) return;
-                    if (!cell.isEditable()) return; // Игнорируем изменения в нередактируемых ячейках
+                // Добавляем обработчик клавиш
+                cell.setOnKeyPressed(event -> {
+                    System.out.println("Key pressed: " + event.getCode());
+                    if (!cell.isEditable()) {
+                        System.out.println("Cell is not editable");
+                        return;
+                    }
 
-                    isProcessingInput = true;
-                    try {
-                        if (newValue != null && !newValue.isEmpty()) {
-                            handleCellInput(row, col, newValue);
+                    String keyValue = event.getText();
+                    System.out.println("Key value: " + keyValue);
+
+                    if (keyValue.matches("[1-9]")) {
+                        int value = Integer.parseInt(keyValue);
+                        System.out.println("Attempting to set value: " + value + " at [" + row + "," + col + "]");
+
+                        if (game.isValidMove(row, col, value)) {
+                            System.out.println("Valid move detected");
+                            game.getBoard()[row][col] = value;
+                            cell.setText(keyValue);
+
+                            if (game.isComplete()) {
+                                timer.stop();
+                                showAlert(LanguageManager.getInstance().getString("dialog.congratulations"),
+                                        LanguageManager.getInstance().getString("dialog.puzzle.solved"));
+                            }
+                        } else {
+                            System.out.println("Invalid move detected");
+                            cell.setText("");
                         }
-                    } finally {
-                        isProcessingInput = false;
+                    }
+                });
+
+                // Обработчик для предотвращения нежелательного ввода
+                cell.textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (!cell.isFocused()) return;
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        game.getBoard()[row][col] = 0;
+                        return;
+                    }
+
+                    // Если введено что-то кроме одной цифры от 1 до 9
+                    if (!newValue.matches("[1-9]")) {
+                        Platform.runLater(() -> cell.setText(oldValue));
+                    }
+                });
+
+                // Обработчик фокуса для подсветки
+                cell.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
+                    if (isFocused) {
+                        System.out.println("Cell focused: " + row + "," + col);
+                        highlightRelatedCells(row, col);
+                    } else {
+                        unhighlightAllCells();
                     }
                 });
             }
         }
     }
+
+    // Добавляем метод для проверки состояния ячейки
+    private void debugCellState(TextField cell, int row, int col) {
+        System.out.println("Cell [" + row + "," + col + "]:");
+        System.out.println("- Editable: " + cell.isEditable());
+        System.out.println("- Focused: " + cell.isFocused());
+        System.out.println("- Current value: " + cell.getText());
+        System.out.println("- Board value: " + game.getBoard()[row][col]);
+    }
+
 
 
     private void setupCellBehavior(TextField cell, int row, int col) {
@@ -177,42 +225,6 @@ public class GameController {
         });
     }
 
-    private void handleCellInput(int row, int col, String newValue) {
-        if (!cells[row][col].isEditable()) {
-            Platform.runLater(() -> cells[row][col].setText(""));
-            return;
-        }
-
-        if (newValue.isEmpty()) {
-            game.getBoard()[row][col] = 0;
-            return;
-        }
-
-        try {
-            int value = Integer.parseInt(newValue);
-
-            if (value < 1 || value > 9) {
-                Platform.runLater(() -> cells[row][col].setText(""));
-                return;
-            }
-
-            if (game.isValidMove(row, col, value)) {
-                game.getBoard()[row][col] = value;
-
-                if (game.isComplete()) {
-                    timer.stop();
-                    Platform.runLater(() -> {
-                        showAlert("Поздравляем!", "Вы успешно решили головоломку!");
-                    });
-                }
-            } else {
-                Platform.runLater(() -> cells[row][col].setText(""));
-            }
-        } catch (NumberFormatException e) {
-            Platform.runLater(() -> cells[row][col].setText(""));
-        }
-    }
-
     private void highlightRelatedCells(int row, int col) {
         String highlightStyle = "-fx-background-color: #f0f0f0;";
 
@@ -260,28 +272,33 @@ public class GameController {
             try {
                 int[][] currentBoard = game.getBoard();
 
-                // Сначала делаем все ячейки редактируемыми
+                // Сначала делаем все ячейки редактируемыми и очищаем их
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
                         if (cells[i][j] != null) {
-                            cells[i][j].setEditable(true);
-                            cells[i][j].clear();
+                            TextField cell = cells[i][j];
+                            cell.setEditable(true);
+                            cell.clear();
+                            cell.setStyle(null);
                         }
                     }
                 }
 
-                // Теперь устанавливаем значения
+                // Затем устанавливаем начальные значения
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
                         TextField cell = cells[i][j];
                         int value = currentBoard[i][j];
 
-                        if (cell != null && value != 0) {
-                            isProcessingInput = true; // Блокируем обработку изменений
+                        if (cell != null) {
+                            isProcessingInput = true;
                             try {
-                                cell.setText(String.valueOf(value));
-                                cell.setEditable(false);
-                                cell.setStyle("-fx-background-color: #f8f8f8; -fx-text-fill: #000000; -fx-font-weight: bold;");
+                                if (value != 0) {
+                                    cell.setText(String.valueOf(value));
+                                    cell.setEditable(false);
+                                    cell.setStyle("-fx-background-color: #f8f8f8; -fx-text-fill: #000000; -fx-font-weight: bold;");
+                                }
+                                debugCellState(cell, i, j);
                             } finally {
                                 isProcessingInput = false;
                             }
