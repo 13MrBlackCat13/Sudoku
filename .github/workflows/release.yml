@@ -66,9 +66,14 @@ jobs:
                   --app-version ${{ needs.prepare.outputs.version }} `
                   --win-dir-chooser `
                   --win-menu `
-                  --win-shortcut `
-                  --icon src/main/resources/icon.ico
-          Compress-Archive -Path .\Sudoku.exe -DestinationPath ${{ matrix.artifact_name }}
+                  --win-shortcut
+          
+          if (Test-Path "Sudoku.exe") {
+              Compress-Archive -Path "Sudoku.exe" -DestinationPath ${{ matrix.artifact_name }}
+          } else {
+              Write-Error "Sudoku.exe not found!"
+              exit 1
+          }
 
       # Linux-specific steps
       - name: Build Linux Package
