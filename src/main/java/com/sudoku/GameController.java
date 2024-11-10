@@ -1,3 +1,5 @@
+package com.sudoku;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -398,7 +400,7 @@ public class GameController {
             }
 
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("interface.fxml"),
+                    getClass().getResource("/fxml/interface.fxml"),
                     LanguageManager.getInstance().getBundle()
             );
             Parent root = loader.load();

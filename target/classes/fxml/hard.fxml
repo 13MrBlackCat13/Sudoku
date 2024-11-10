@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<BorderPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController"
+<BorderPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sudoku.GameController"
             styleClass="main-container" style="-fx-background-color: #588157;">
     <left>
         <VBox spacing="20" styleClass="control-panel">
@@ -246,6 +246,6 @@
         </StackPane>
     </center>
     <stylesheets>
-        <String fx:value="styles.css"/>
+        <String fx:value="/css/styles.css"/>
     </stylesheets>
 </BorderPane>

@@ -1,3 +1,5 @@
+package com.sudoku;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,7 +43,7 @@ public class NewFXMLGenerator {
         for (String difficulty : difficulties) {
             generateGameFXML(difficulty + ".fxml");
         }
-        generateMainMenuFXML("interface.fxml");
+        generateMainMenuFXML("fxml/interface.fxml");
     }
 
     private static void generateGameFXML(String filename) throws IOException {

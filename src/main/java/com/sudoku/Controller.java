@@ -1,3 +1,5 @@
+package com.sudoku;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,8 +32,6 @@ public class Controller {
     @FXML
     public void initialize() {
         LOGGER.info("Controller initialized");
-
-        // Инициализация селектора языка
         languageSelector.getItems().addAll(LanguageManager.Language.values());
         languageSelector.setValue(LanguageManager.getInstance().getCurrentLanguage());
     }
@@ -41,7 +41,6 @@ public class Controller {
         LanguageManager.Language selectedLanguage = languageSelector.getValue();
         if (selectedLanguage != null) {
             LanguageManager.getInstance().setLanguage(selectedLanguage);
-            // Перезагрузка сцены для применения нового языка
             reloadScene();
         }
     }
@@ -49,7 +48,7 @@ public class Controller {
     private void reloadScene() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("interface.fxml"),
+                    Controller.class.getResource("/fxml/interface.fxml"),
                     LanguageManager.getInstance().getBundle()
             );
             Parent root = loader.load();
@@ -66,14 +65,21 @@ public class Controller {
         try {
             LOGGER.info("Starting game with difficulty: " + difficulty);
 
-            // Создаем loader с передачей ResourceBundle
+            // Важное изменение здесь - используем абсолютный путь к ресурсу
+            String fxmlPath = "/fxml/" + fxmlFile;
+            LOGGER.info("Loading FXML from: " + fxmlPath);
+
+            var fxmlUrl = Controller.class.getResource(fxmlPath);
+            if (fxmlUrl == null) {
+                throw new IOException("Cannot find FXML file: " + fxmlPath);
+            }
+
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(fxmlFile),
+                    fxmlUrl,
                     LanguageManager.getInstance().getBundle()
             );
 
             Parent root = loader.load();
-
             GameController gameController = loader.getController();
             if (gameController == null) {
                 throw new RuntimeException("Failed to get GameController");

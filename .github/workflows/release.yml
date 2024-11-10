@@ -14,7 +14,6 @@ jobs:
       - name: Get version from tag
         id: get_version
         run: |
-          # Convert v1.0.3 to 1.0.3
           VERSION=${GITHUB_REF#refs/tags/v}
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
@@ -67,14 +66,18 @@ jobs:
           
           jpackage --input target/ `
                   --main-jar Sudoku.jar `
-                  --main-class App `
+                  --main-class com.sudoku.App `
                   --type exe `
                   --name "Sudoku" `
                   --dest dist `
                   --app-version $version `
                   --win-dir-chooser `
                   --win-menu `
-                  --win-shortcut
+                  --win-shortcut `
+                  --resource-dir src/main/resources `
+                  --vendor "Sudoku Game" `
+                  --copyright "Copyright © 2024" `
+                  --description "Sudoku Game"
 
           Write-Host "Contents of dist directory:"
           Get-ChildItem dist
@@ -94,9 +97,13 @@ jobs:
         run: |
           jpackage --input target/ \
                   --main-jar Sudoku.jar \
-                  --main-class App \
+                  --main-class com.sudoku.App \
                   --type deb \
                   --name Sudoku \
+                  --resource-dir src/main/resources \
+                  --vendor "Sudoku Game" \
+                  --linux-menu-group "Games" \
+                  --linux-shortcut \
                   --app-version ${{ needs.prepare.outputs.version }}
           zip -r ${{ matrix.artifact_name }} *.deb
 
@@ -106,9 +113,13 @@ jobs:
         run: |
           jpackage --input target/ \
                   --main-jar Sudoku.jar \
-                  --main-class App \
+                  --main-class com.sudoku.App \
                   --type dmg \
                   --name Sudoku \
+                  --resource-dir src/main/resources \
+                  --vendor "Sudoku Game" \
+                  --copyright "Copyright © 2024" \
+                  --mac-package-identifier com.sudoku \
                   --app-version ${{ needs.prepare.outputs.version }} \
                   --mac-package-name Sudoku
           zip -r ${{ matrix.artifact_name }} *.dmg

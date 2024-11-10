@@ -51,18 +51,47 @@ A modern Java-based Sudoku puzzle game built with JavaFX, featuring multiple dif
 - **Save/Load:** Save or load game
 - **Hint:** Get help on a cell
 
-## Building from Source
+## Building from source
 
-1. **Requirements:** JDK 23+, Maven 3.8.1+, JavaFX 23+
-2. Clone the repository:
+### Prerequisites
+- JDK 23 or later
+- Maven 3.8.1 or later
+- Git
+
+### Steps
+1. Clone the repository:
    ```bash
-   git clone https://github.com/13MrBlackCat13/Sudoku.git
+   git clone https://github.com/yourusername/Sudoku.git
    cd Sudoku
    ```
-3. Build with Maven:
+
+2. Build the project:
    ```bash
    mvn clean package
    ```
+
+3. Run the application:
+   ```bash
+   java -jar target/Sudoku.jar
+   ```
+
+### Building native packages
+The project uses jpackage to create native installers:
+
+#### Windows
+```bash
+jpackage --input target/ --main-jar Sudoku.jar --main-class com.sudoku.App --type exe --name "Sudoku"
+```
+
+#### Linux
+```bash
+jpackage --input target/ --main-jar Sudoku.jar --main-class com.sudoku.App --type deb --name "Sudoku"
+```
+
+#### macOS
+```bash
+jpackage --input target/ --main-jar Sudoku.jar --main-class com.sudoku.App --type dmg --name "Sudoku"
+```
 
 ## Contributing
 
@@ -77,5 +106,3 @@ Licensed under the MIT License. See [LICENSE](https://github.com/13MrBlackCat13/
 **Contact:** [@13MrBlackCat13](https://github.com/13MrBlackCat13)
 **Project Link:** [GitHub Repository](https://github.com/13MrBlackCat13/Sudoku)
 ```
-
-This keeps all the necessary information, but in a more concise, easy-to-read format. Let me know if you'd like further adjustments!

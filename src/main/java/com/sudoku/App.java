@@ -1,3 +1,5 @@
+package com.sudoku;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -5,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
 
 public class App extends Application {
 
@@ -17,15 +18,14 @@ public class App extends Application {
 
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("interface.fxml"),
+                    getClass().getResource("/fxml/interface.fxml"),
                     langManager.getBundle()
             );
-            System.out.println("FXML location: " + getClass().getResource("interface.fxml"));
+            System.out.println("FXML location: " + getClass().getResource("/fxml/interface.fxml"));
             System.out.println("ResourceBundle: " + loader.getResources());
 
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            // Используем локализованный заголовок
             primaryStage.setTitle(langManager.getString("window.title"));
             primaryStage.setScene(scene);
             primaryStage.show();

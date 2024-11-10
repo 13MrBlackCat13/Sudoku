@@ -1,10 +1,12 @@
+package com.sudoku;
+
 import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 public class LanguageManager {
-    private static final String BUNDLE_NAME = "messages";
+    private static final String BUNDLE_NAME = "i18n/messages";
     private static final String PREF_LANGUAGE = "language";
     private static LanguageManager instance;
     private ResourceBundle bundle;
@@ -51,18 +53,14 @@ public class LanguageManager {
     public void setLanguage(Language language) {
         try {
             System.out.println("Setting language to: " + language);
-
             currentLocale = new Locale(language.getCode());
             System.out.println("Created locale: " + currentLocale);
 
-            // Используем текущий ClassLoader
-            ClassLoader classLoader = LanguageManager.class.getClassLoader();
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             bundle = ResourceBundle.getBundle(BUNDLE_NAME, currentLocale, classLoader);
             System.out.println("Bundle loaded: " + bundle);
 
-            // Проверяем доступные ключи
             if (bundle != null) {
-                System.out.println("Test key from bundle: " + bundle.getString("menu.title"));
                 System.out.println("Available keys: " + Collections.list(bundle.getKeys()));
             }
 

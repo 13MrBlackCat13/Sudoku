@@ -1,0 +1,119 @@
+.main-container {
+    -fx-background-color: #588157;
+    -fx-pref-width: 800;
+    -fx-pref-height: 600;
+}
+
+.control-panel {
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-min-width: 200;
+}
+
+/* Стили для главной кнопки (Назад) */
+.control-button {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 5;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-min-width: 150;
+    -fx-min-height: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+/* Стиль для таймера */
+.timer-label {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-min-width: 150;
+    -fx-min-height: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+/* Стили для игровых кнопок */
+.game-button {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 5;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-min-width: 70;
+    -fx-min-height: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 2, 0, 0, 1);
+}
+
+.button-group {
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+/* Стили для игрового поля */
+.game-grid {
+    -fx-background-color: white;
+    -fx-padding: 2;
+    -fx-hgap: 1;
+    -fx-vgap: 1;
+    -fx-grid-lines-visible: true;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
+
+.game-cell {
+    -fx-background-color: white;
+    -fx-alignment: center;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20;
+    -fx-font-weight: normal;
+    -fx-pref-width: 50;
+    -fx-pref-height: 50;
+    -fx-min-width: 50;
+    -fx-min-height: 50;
+    -fx-max-width: 50;
+    -fx-max-height: 50;
+    -fx-border-color: #808080;
+    -fx-border-width: 1;
+    -fx-text-fill: #000000;
+}
+
+/* Стили для границ блоков 3x3 */
+.game-cell.block-right {
+    -fx-border-width: 0.5 2 0.5 0.5;
+}
+
+.game-cell.block-bottom {
+    -fx-border-width: 0.5 0.5 2 0.5;
+}
+
+.game-cell.block-corner {
+    -fx-border-width: 0.5 2 2 0.5;
+}
+
+/* Стили для фиксированных чисел */
+.game-cell:disabled {
+    -fx-opacity: 1.0;
+    -fx-background-color: #f8f8f8;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+/* Стили для подсвеченных ячеек */
+.game-cell:focused {
+    -fx-background-color: #e3f2fd;
+}
+
+/* Стили для кнопок при наведении */
+.game-button:hover, .control-button:hover {
+    -fx-background-color: #d0d0d0;
+}
+
+/* Стили для нажатых кнопок */
+.game-button:pressed, .control-button:pressed {
+    -fx-background-color: #b0b0b0;
+}
