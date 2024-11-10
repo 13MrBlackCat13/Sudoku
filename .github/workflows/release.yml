@@ -50,7 +50,12 @@ jobs:
           mvn versions:commit
 
       - name: Build with Maven
-        run: mvn clean package -Pnative-image
+        run: mvn clean package
+
+      - name: List target directory
+        run: |
+          ls -la target/
+        shell: bash
 
       # Windows-specific steps
       - name: Build Windows Package
@@ -65,7 +70,7 @@ jobs:
           $version = "${{ needs.prepare.outputs.version }}"
           
           jpackage --input target/ `
-                  --main-jar Sudoku.jar `
+                  --main-jar sudoku.jar `
                   --main-class com.sudoku.App `
                   --type exe `
                   --name "Sudoku" `
@@ -96,7 +101,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           jpackage --input target/ \
-                  --main-jar Sudoku.jar \
+                  --main-jar sudoku.jar \
                   --main-class com.sudoku.App \
                   --type deb \
                   --name Sudoku \
@@ -112,7 +117,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
           jpackage --input target/ \
-                  --main-jar Sudoku.jar \
+                  --main-jar sudoku.jar \
                   --main-class com.sudoku.App \
                   --type dmg \
                   --name Sudoku \
@@ -129,7 +134,7 @@ jobs:
         with:
           files: |
             ${{ matrix.artifact_name }}
-            target/Sudoku.jar
+            target/sudoku.jar
           name: Release ${{ needs.prepare.outputs.version }}
           draft: false
           prerelease: false
