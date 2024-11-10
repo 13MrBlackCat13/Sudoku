@@ -1,20 +1,15 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.animation.Timeline;
-import javafx.animation.KeyFrame;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.application.Platform;
 
 import java.io.IOException;
 import java.util.Map;
@@ -165,7 +160,6 @@ public class GameController {
         System.out.println("- Current value: " + cell.getText());
         System.out.println("- Board value: " + game.getBoard()[row][col]);
     }
-
 
 
     private void setupCellBehavior(TextField cell, int row, int col) {

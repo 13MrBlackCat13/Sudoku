@@ -85,22 +85,24 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.panteleyev</groupId>
-                        <artifactId>jpackage-maven-plugin</artifactId>
-                        <version>1.6.0</version>
-                        <configuration>
-                            <name>${app.name}</name>
-                            <vendor>Your Company</vendor>
-                            <destination>target/dist</destination>
-                            <module>${main.class}</module>
-                            <runtimeImage>target/jlink-image</runtimeImage>
-                            <javaOptions>
-                                <option>-Dfile.encoding=UTF-8</option>
-                            </javaOptions>
-                            <winMenu>true</winMenu>
-                            <winDirChooser>true</winDirChooser>
-                            <winShortcut>true</winShortcut>
-                        </configuration>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <version>3.5.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                                <configuration>
+                                    <transformers>
+                                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                            <mainClass>App</mainClass>
+                                        </transformer>
+                                    </transformers>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

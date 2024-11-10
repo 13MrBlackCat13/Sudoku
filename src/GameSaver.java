@@ -32,10 +32,21 @@ public class GameSaver {
             return copy;
         }
 
-        public int[][] getBoard() { return deepCopy(board); }
-        public int[][] getSolution() { return deepCopy(solution); }
-        public SudokuLogic.Difficulty getDifficulty() { return difficulty; }
-        public int getTimeElapsed() { return timeElapsed; }
+        public int[][] getBoard() {
+            return deepCopy(board);
+        }
+
+        public int[][] getSolution() {
+            return deepCopy(solution);
+        }
+
+        public SudokuLogic.Difficulty getDifficulty() {
+            return difficulty;
+        }
+
+        public int getTimeElapsed() {
+            return timeElapsed;
+        }
     }
 
     public static void saveGame(String saveName, GameState state) throws IOException {
