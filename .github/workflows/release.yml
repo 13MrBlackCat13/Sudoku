@@ -10,12 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get_version.outputs.version }}
+      clean_version: ${{ steps.get_version.outputs.clean_version }}
     steps:
       - name: Get version from tag
         id: get_version
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
+          # Создаем "чистую" версию для MacOS (только цифры и точки)
+          CLEAN_VERSION=$(echo $VERSION | sed -E 's/[^0-9.]//g')
+          if [[ -z "$CLEAN_VERSION" ]]; then
+            CLEAN_VERSION="0.1.0"
+          fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "clean_version=$CLEAN_VERSION" >> $GITHUB_OUTPUT
 
   build:
     needs: prepare
@@ -67,7 +74,7 @@ jobs:
 
           New-Item -ItemType Directory -Force -Path "dist"
           
-          $version = "${{ needs.prepare.outputs.version }}"
+          $version = "${{ needs.prepare.outputs.clean_version }}"
           
           jpackage --input target/ `
                   --main-jar sudoku.jar `
@@ -109,7 +116,7 @@ jobs:
                   --vendor "Sudoku Game" \
                   --linux-menu-group "Games" \
                   --linux-shortcut \
-                  --app-version ${{ needs.prepare.outputs.version }}
+                  --app-version ${{ needs.prepare.outputs.clean_version }}
           zip -r ${{ matrix.artifact_name }} *.deb
 
       # macOS-specific steps
@@ -125,7 +132,7 @@ jobs:
                   --vendor "Sudoku Game" \
                   --copyright "Copyright © 2024" \
                   --mac-package-identifier com.sudoku \
-                  --app-version ${{ needs.prepare.outputs.version }} \
+                  --app-version ${{ needs.prepare.outputs.clean_version }} \
                   --mac-package-name Sudoku
           zip -r ${{ matrix.artifact_name }} *.dmg
 
