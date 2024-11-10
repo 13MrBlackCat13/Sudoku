@@ -16,11 +16,8 @@ jobs:
         id: get_version
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
-          # Создаем "чистую" версию для MacOS (только цифры и точки)
-          CLEAN_VERSION=$(echo $VERSION | sed -E 's/[^0-9.]//g')
-          if [[ -z "$CLEAN_VERSION" ]]; then
-            CLEAN_VERSION="0.1.0"
-          fi
+          # Для MacOS используем версию, начинающуюся с 1
+          CLEAN_VERSION="1.0.0"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "clean_version=$CLEAN_VERSION" >> $GITHUB_OUTPUT
 
@@ -144,5 +141,5 @@ jobs:
             target/sudoku.jar
           name: Release ${{ needs.prepare.outputs.version }}
           draft: false
-          prerelease: false
+          prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
